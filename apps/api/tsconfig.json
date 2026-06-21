@@ -5,7 +5,8 @@
 		"paths": {
 			"@/*" : ["./src/*"],
 			"routes": ["./src/routes/index.ts"],
-			"controllers": ["./src/controllers/index.ts"]
+			"controllers": ["./src/controllers/index.ts"],
+			"db": ["./data/index.ts"],
 		},
 		"types": ["bun-types"] ,
 		"esModuleInterop": true,
