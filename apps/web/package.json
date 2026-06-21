@@ -17,6 +17,7 @@
 		"@types/react": "19.2.17",
 		"@types/react-dom": "19.2.3",
 		"astro": "6.4.7",
+		"better-auth": "1.6.19",
 		"react": "19.2.7",
 		"react-dom": "19.2.7",
 		"tailwindcss": "4.3.1"
