@@ -1,5 +1,9 @@
 # kosmos-gps
 
+stack: 
+- frontend: astro + tailwind + react
+- backend: elysia + better auth
+
 ## Todos
 
 - [x] astro + tailwind + react
