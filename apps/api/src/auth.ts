@@ -18,7 +18,7 @@ export const auth = betterAuth({
 			clientSecret: process.env.GITHUB_CLIENT_SECRET!,
 		},
 	},
-	trustedOrigins: ['http://localhost:4321'],
+	trustedOrigins: [process.env.CLIENT_URL ?? 'http://localhost:4321'],
 })
 
 export type Session = typeof auth.$Infer.Session
