@@ -1,8 +1,9 @@
 import { Elysia } from 'elysia'
 import { cors } from '@elysiajs/cors'
 import { auth } from '@/auth'
+import routes from 'routes'
 
-const app = new Elysia()
+const app = new Elysia({ prefix: '/api' })
 	.use(
 		cors({
 			origin: [process.env.CLIENT_URL ?? 'http://localhost:4321'],
@@ -11,7 +12,12 @@ const app = new Elysia()
 			allowedHeaders: ['Content-Type', 'Authorization'],
 		}),
 	)
+
 	.all('/api/auth/*', ({ request }) => auth.handler(request))
+
+	// routers
+	.use(routes.items)
+
 	.listen(process.env.PORT ?? 3000)
 
 console.log(`Server running at ${app.server?.hostname}:${app.server?.port}`)
