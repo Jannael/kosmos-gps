@@ -1,5 +1,5 @@
 ---
-
+import { SignInButton } from '../components/SignInButton'
 ---
 
 <html lang="en">
@@ -9,9 +9,18 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Kosmos GPS</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class="bg-gray-50">
+		<div class="mx-auto max-w-2xl px-4 py-12">
+			<div class="flex items-center justify-between">
+				<h1 class="text-2xl font-bold text-gray-900">Kosmos GPS</h1>
+			</div>
+			<div class="mt-16 flex flex-col items-center justify-center gap-6">
+				<h2 class="text-center text-3xl font-bold tracking-tight text-gray-900">Welcome to Kosmos GPS</h2>
+				<p class="max-w-md text-center text-gray-600">Sign in to access your dashboard and manage your GPS tracking devices.</p>
+				<SignInButton client:load />
+			</div>
+		</div>
 	</body>
 </html>
