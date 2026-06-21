@@ -19,7 +19,6 @@ const router = new Elysia({ prefix: '/inventory' })
 			limit: t.Optional(t.Number()),
 			offset: t.Optional(t.Number()),
 			search: t.Optional(t.String()),
-			enable: t.Optional(t.Boolean()),
 		}),
 	})
 
@@ -39,7 +38,6 @@ const router = new Elysia({ prefix: '/inventory' })
 		body: t.Object({
 			id: t.String(),
 			name: t.Optional(t.String()),
-			enable: t.Optional(t.Boolean()),
 		}),
 	})
 
