@@ -31,6 +31,7 @@ const router = new Elysia({ prefix: '/inventory' })
 	.post('/add', ({ body, user }) => controllers.items.post({ ...body, account: user.email }), {
 		body: t.Object({
 			name: t.String(),
+			count: t.Optional(t.Number()),
 		}),
 	})
 
@@ -38,6 +39,7 @@ const router = new Elysia({ prefix: '/inventory' })
 		body: t.Object({
 			id: t.String(),
 			name: t.Optional(t.String()),
+			count: t.Optional(t.Number()),
 			deletedAt: t.Optional(t.Nullable(t.String())),
 		}),
 	})

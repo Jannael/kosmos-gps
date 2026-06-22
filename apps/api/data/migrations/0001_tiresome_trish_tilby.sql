@@ -1,0 +1,1 @@
+ALTER TABLE `inventory_items` ADD `count` integer DEFAULT 0 NOT NULL;

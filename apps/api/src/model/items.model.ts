@@ -44,25 +44,37 @@ export default {
 			.get()
 	},
 
-	createItem: async ({ name, account }: { name: string; account: string }) => {
-		return db.insert(itemsTable).values({ id: crypto.randomUUID(), name, account }).returning().get()
+	createItem: async ({ name, account, count }: { name: string; account: string; count?: number }) => {
+		return db
+			.insert(itemsTable)
+			.values({ id: crypto.randomUUID(), name, account, count: count ?? 0 })
+			.returning()
+			.get()
 	},
 
-	updateItem: async ({ id, name, account, deletedAt }: { id: string; name?: string; account: string; deletedAt?: string | null }) => {
-		if (deletedAt !== undefined) {
-			return db
-				.update(itemsTable)
-				.set({ deletedAt })
-				.where(and(eq(itemsTable.id, id), eq(itemsTable.account, account)))
-				.returning()
-				.get()
-		}
+	updateItem: async ({
+		id,
+		name,
+		account,
+		count,
+		deletedAt,
+	}: {
+		id: string
+		name?: string
+		account: string
+		count?: number
+		deletedAt?: string | null
+	}) => {
+		const set: Record<string, unknown> = {}
+		if (name !== undefined) set.name = name
+		if (count !== undefined) set.count = count
+		if (deletedAt !== undefined) set.deletedAt = deletedAt
 
-		if (name === undefined) return
+		if (Object.keys(set).length === 0) return
 
 		return db
 			.update(itemsTable)
-			.set({ name })
+			.set(set)
 			.where(and(eq(itemsTable.id, id), eq(itemsTable.account, account)))
 			.returning()
 			.get()

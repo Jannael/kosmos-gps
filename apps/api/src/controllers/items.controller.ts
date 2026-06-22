@@ -9,12 +9,24 @@ export default {
 		return model.getItem({ id, account })
 	},
 
-	post: async ({ name, account }: { name: string; account: string }) => {
-		return model.createItem({ name, account })
+	post: async ({ name, account, count }: { name: string; account: string; count?: number }) => {
+		return model.createItem({ name, account, count })
 	},
 
-	update: async ({ id, name, account, deletedAt }: { id: string; name?: string; account: string; deletedAt?: string | null }) => {
-		return model.updateItem({ id, name, account, deletedAt })
+	update: async ({
+		id,
+		name,
+		account,
+		count,
+		deletedAt,
+	}: {
+		id: string
+		name?: string
+		account: string
+		count?: number
+		deletedAt?: string | null
+	}) => {
+		return model.updateItem({ id, name, account, count, deletedAt })
 	},
 
 	delete: async ({ id, account }: { id: string; account: string }) => {

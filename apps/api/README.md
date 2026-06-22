@@ -88,6 +88,7 @@ Schema is defined in `data/schema.ts`. Migrations live in `data/migrations/`.
 | `id` | `text` | Primary key |
 | `name` | `text` | Not null |
 | `account` | `text` | User email, not null |
+| `count` | `integer` | Not null, defaults to 0 |
 | `deleted_at` | `text` | Nullable — logical delete |
 
 ### Drizzle commands
