@@ -1,8 +1,28 @@
 import model from '@/model/items.model'
 
 export default {
-	list: async ({ limit, offset, search, account }: { limit?: number; offset?: number; search?: string; account: string }) => {
-		return model.listItems({ limit, offset, search, account })
+	list: async ({
+		limit,
+		offset,
+		search,
+		deleted,
+		account,
+	}: {
+		limit?: number
+		offset?: number
+		search?: string
+		deleted?: boolean
+		account: string
+	}) => {
+		if (deleted) {
+			return model.listDeletedItems({ limit, offset, search, account })
+		}
+
+		if (search) {
+			return model.searchItems({ limit, offset, search, account })
+		}
+
+		return model.listItems({ limit, offset, account })
 	},
 
 	get: async ({ id, account }: { id: string; account: string }) => {

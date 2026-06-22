@@ -2,19 +2,24 @@ import { eq, and, like, isNull, isNotNull, sql } from 'drizzle-orm'
 import { itemsTable, db } from 'db'
 
 export default {
-	listItems: async ({ limit, offset, search, account }: { limit?: number; offset?: number; search?: string; account: string }) => {
-		const conditions = [eq(itemsTable.account, account), isNull(itemsTable.deletedAt)]
-
-		if (search !== undefined) {
-			conditions.push(like(itemsTable.name, `%${search}%`))
-		}
-
+	listItems: async ({ limit, offset, account }: { limit?: number; offset?: number; account: string }) => {
 		if (limit != undefined && limit >= 20) limit = 20
 
 		return db
 			.select()
 			.from(itemsTable)
-			.where(and(...conditions))
+			.where(and(eq(itemsTable.account, account), isNull(itemsTable.deletedAt)))
+			.limit(limit ?? 10)
+			.offset(offset ?? 0)
+	},
+
+	searchItems: async ({ limit, offset, search, account }: { limit?: number; offset?: number; search: string; account: string }) => {
+		if (limit != undefined && limit >= 20) limit = 20
+
+		return db
+			.select()
+			.from(itemsTable)
+			.where(and(eq(itemsTable.account, account), isNull(itemsTable.deletedAt), like(itemsTable.name, `%${search}%`)))
 			.limit(limit ?? 10)
 			.offset(offset ?? 0)
 	},
