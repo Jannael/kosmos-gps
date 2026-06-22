@@ -6,9 +6,11 @@
 		"jsx": "react-jsx",
 		"jsxImportSource": "react",
 		"paths": {
-			"@/*": ["./src/*"],
-			"app": ["./../api/src/index.ts"]
-
+			"@/*": ["./src/*", "./../api/src/*"],
+			"app": ["./../api/src/index.ts"],
+			"routes": ["./../api/src/routes/index.ts"],
+			"controllers": ["./../api/src/controllers/index.ts"],
+			"db": ["./../api/data/index.ts"]
 		}
 	}
 }
