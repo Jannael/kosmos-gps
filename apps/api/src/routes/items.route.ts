@@ -45,7 +45,7 @@ const router = new Elysia({ prefix: '/inventory' })
 		}),
 	})
 
-	.delete('/delete/:id', ({ params, user }) => controllers.items.delete({ ...params, account: user.email }), {
+	.delete('/:id', ({ params, user }) => controllers.items.delete({ ...params, account: user.email }), {
 		params: t.Object({
 			id: t.String(),
 		}),

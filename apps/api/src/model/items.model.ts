@@ -1,4 +1,4 @@
-import { eq, and, like, isNull, isNotNull, sql } from 'drizzle-orm'
+import { eq, and, like, isNull, isNotNull } from 'drizzle-orm'
 import { itemsTable, db } from 'db'
 
 export default {
@@ -87,8 +87,7 @@ export default {
 
 	deleteItem: async ({ id, account }: { id: string; account: string }) => {
 		return db
-			.update(itemsTable)
-			.set({ deletedAt: sql`(datetime('now'))` })
+			.delete(itemsTable)
 			.where(and(eq(itemsTable.id, id), eq(itemsTable.account, account)))
 			.returning()
 			.get()
