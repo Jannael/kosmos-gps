@@ -6,7 +6,7 @@ export function SessionRedirect() {
 
 	useEffect(() => {
 		if (!isPending && session) {
-			window.location.href = '/dashboard'
+			window.location.href = window.location.origin + '/dashboard'
 		}
 	}, [isPending, session])
 

@@ -2,6 +2,8 @@ import { betterAuth } from 'better-auth'
 import { createClient } from '@libsql/client'
 import { LibsqlDialect } from '@libsql/kysely-libsql'
 
+const isHttps = Boolean(process.env.BETTER_AUTH_URL?.startsWith('https://'))
+
 export const auth = betterAuth({
 	database: {
 		dialect: new LibsqlDialect({
@@ -19,6 +21,11 @@ export const auth = betterAuth({
 		},
 	},
 	trustedOrigins: [process.env.CLIENT_URL ?? 'http://localhost:4321'],
+	advanced: {
+		defaultCookieAttributes: {
+			sameSite: isHttps ? 'none' : 'lax',
+		},
+	},
 })
 
 export type Session = typeof auth.$Infer.Session
