@@ -19,7 +19,7 @@ type ItemsStore = {
 	addItem: (name: string, count?: number) => Promise<void>
 }
 
-export const useItemsStore = create<ItemsStore>((set, get) => ({
+export const useItemsStore = create<ItemsStore>()((set, get) => ({
 	items: [],
 	search: '',
 	loading: false,
