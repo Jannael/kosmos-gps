@@ -19,7 +19,7 @@ const app = new Elysia({ prefix: '/api' })
 		}),
 	)
 
-	.all('/api/auth/*', ({ request }) => auth.handler(request))
+	.all('/auth/*', ({ request }) => auth.handler(request))
 
 	// routers
 	.use(routes.items)
