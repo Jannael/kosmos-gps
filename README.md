@@ -1,5 +1,7 @@
 # kosmos-gps
 
+![hero](/screenshots/hero.png)
+
 ![Astro](https://img.shields.io/badge/Astro-ffffff.svg?style=flat&logo=Astro&logoColor=000000)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-ffffff.svg?style=flat&logo=Tailwind%20CSS&logoColor=000000)
 ![React](https://img.shields.io/badge/React-ffffff.svg?style=flat&logo=React&logoColor=000000)
