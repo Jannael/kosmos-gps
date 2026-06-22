@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@astrojs/react": "5.0.7",
+		"@elysia/eden": "1.4.10",
 		"@fontsource-variable/jost": "5.2.8",
 		"@tailwindcss/vite": "4.3.1",
 		"@types/react": "19.2.17",
@@ -21,6 +22,7 @@
 		"better-auth": "1.6.19",
 		"react": "19.2.7",
 		"react-dom": "19.2.7",
-		"tailwindcss": "4.3.1"
+		"tailwindcss": "4.3.1",
+		"zustand": "5.0.14"
 	}
 }
