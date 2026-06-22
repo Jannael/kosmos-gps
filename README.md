@@ -11,7 +11,7 @@
 ## Api documentation
 it was generated using openapi feature from elysia
 
-[Api documentation](https://api.clony.tech/api/openapi*)
+[Api documentation](https://api.clony.tech/api/openapi/)
 
 ## Todos
 
