@@ -4,11 +4,12 @@ import { UserDropdown } from '@/components/UserDropdown'
 import { SearchBar } from '@/components/SearchBar'
 import { AddItemForm } from '@/components/AddItemForm'
 import { ItemRow } from '@/components/ItemRow'
+import { DeletedItemRow } from '@/components/DeletedItemRow'
 import { useItemsStore } from '@/store/items'
 
 export function DashboardContent() {
 	const { data: session, isPending } = useSession()
-	const { items, loading, hasMore, fetchItems } = useItemsStore()
+	const { items, loading, hasMore, showingDeleted, fetchItems, setShowingDeleted } = useItemsStore()
 
 	useEffect(() => {
 		fetchItems()
@@ -40,7 +41,7 @@ export function DashboardContent() {
 	return (
 		<div className="mx-auto max-w-4xl px-4 py-10">
 			<div className="mb-8 flex items-center justify-between">
-				<h1 className="text-2xl font-bold text-gray-900">Inventario</h1>
+				<h1 className="text-2xl font-bold text-gray-900">{showingDeleted ? 'Papelera' : 'Inventario'}</h1>
 				<UserDropdown />
 			</div>
 
@@ -48,7 +49,24 @@ export function DashboardContent() {
 				<div className="flex-1">
 					<SearchBar />
 				</div>
-				<AddItemForm />
+				{!showingDeleted && <AddItemForm />}
+				<button
+					type="button"
+					onClick={() => setShowingDeleted(!showingDeleted)}
+					className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border transition-colors ${
+						showingDeleted
+							? 'border-[var(--color-primary)] bg-[var(--color-primary)]/10 text-[var(--color-primary)]'
+							: 'border-gray-300 text-gray-500 hover:bg-gray-100'
+					}`}
+				>
+					<svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+						/>
+					</svg>
+				</button>
 			</div>
 
 			<div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -58,6 +76,21 @@ export function DashboardContent() {
 					</div>
 				) : items.length === 0 ? (
 					<div className="py-20 text-center text-sm text-gray-400">No hay items</div>
+				) : showingDeleted ? (
+					<table className="w-full text-left text-sm">
+						<thead>
+							<tr className="border-b border-gray-100 text-xs font-semibold tracking-wider text-gray-400 uppercase">
+								<th className="px-6 py-4">Nombre</th>
+								<th className="px-6 py-4">Fecha eliminación</th>
+								<th className="px-6 py-4">Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							{items.map((item) => (
+								<DeletedItemRow key={item.id} item={item} />
+							))}
+						</tbody>
+					</table>
 				) : (
 					<table className="w-full text-left text-sm">
 						<thead>

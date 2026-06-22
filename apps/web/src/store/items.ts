@@ -17,13 +17,17 @@ type ItemsStore = {
 	loading: boolean
 	offset: number
 	hasMore: boolean
+	showingDeleted: boolean
 	setSearch: (search: string) => void
 	setItems: (items: Item[]) => void
+	setShowingDeleted: (showing: boolean) => void
 	fetchItems: (reset?: boolean) => Promise<void>
 	addItem: (name: string, count?: number) => Promise<void>
 	updateItemName: (id: string, name: string) => Promise<void>
 	updateCount: (id: string, newCount: number) => Promise<void>
 	deleteItem: (id: string) => Promise<void>
+	recoverItem: (id: string) => Promise<void>
+	permanentlyDeleteItem: (id: string) => Promise<void>
 }
 
 export const useItemsStore = create<ItemsStore>()((set, get) => ({
@@ -32,14 +36,19 @@ export const useItemsStore = create<ItemsStore>()((set, get) => ({
 	loading: false,
 	offset: 0,
 	hasMore: true,
+	showingDeleted: false,
 	setSearch: (search) => set({ search }),
 	setItems: (items) => set({ items }),
+	setShowingDeleted: (showingDeleted) => {
+		set({ showingDeleted })
+		get().fetchItems()
+	},
 	fetchItems: async (reset = true) => {
-		const { search, offset } = get()
+		const { search, offset, showingDeleted } = get()
 		const nextOffset = reset ? 0 : offset
 		set({ loading: true })
 		const { data, error } = await getClient().api.inventory.list.get({
-			query: { limit: PAGE_SIZE, offset: nextOffset, ...(search ? { search } : {}) },
+			query: { limit: PAGE_SIZE, offset: nextOffset, ...(search ? { search } : {}), ...(showingDeleted ? { deleted: true } : {}) },
 		})
 		if (error) {
 			console.error('Failed to fetch items', error)
@@ -94,6 +103,22 @@ export const useItemsStore = create<ItemsStore>()((set, get) => ({
 		})
 		if (error) {
 			console.error('Failed to delete item', error)
+			return
+		}
+		await get().fetchItems()
+	},
+	recoverItem: async (id) => {
+		const { error } = await getClient().api.inventory.update.put({ id, deletedAt: null })
+		if (error) {
+			console.error('Failed to recover item', error)
+			return
+		}
+		await get().fetchItems()
+	},
+	permanentlyDeleteItem: async (id) => {
+		const { error } = await getClient().api.inventory({ id }).delete()
+		if (error) {
+			console.error('Failed to permanently delete item', error)
 			return
 		}
 		await get().fetchItems()
