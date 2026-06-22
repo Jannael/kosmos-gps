@@ -29,3 +29,5 @@ const app = new Elysia({ prefix: '/api' })
 console.log(`Server running at ${app.server?.hostname}:${app.server?.port}`)
 
 export type App = typeof app
+
+export default app
