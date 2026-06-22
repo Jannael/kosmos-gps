@@ -6,6 +6,7 @@
 		"dev": "bun run --watch src/index.ts"
 	},
 	"dependencies": {
+		"@elysia/openapi": "1.4.15",
 		"@elysiajs/cors": "1.4.2",
 		"@libsql/client": "0.8.1",
 		"@libsql/kysely-libsql": "0.4.1",
